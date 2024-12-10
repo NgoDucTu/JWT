@@ -1,10 +1,16 @@
-const e = require("cors");
+require("dotenv").config();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
 
 const createUserService = async (name, password, email) => {
   try {
+    const user = await User.findOne({ email });
+    if (user) {
+      console.log("Exist, please use another");
+      return null;
+    }
     //hash user pw
     const hashPw = await bcrypt.hash(password, saltRounds);
 
@@ -41,9 +47,32 @@ const loginService = async (email, password) => {
         };
       } else {
         // create an access token
-        return "create an access token";
+        const payload = {
+          email: user.email,
+          name: user.name,
+        };
+        const access_token = jwt.sign(payload, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRE,
+        });
+        return {
+          EC: 0,
+          access_token,
+          user: {
+            email: user.email,
+            name: user.name,
+          },
+        };
       }
     }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+const getUserService = async () => {
+  try {
+    let result = await User.find({});
+    return result;
   } catch (error) {
     console.log(error);
     return null;
@@ -53,4 +82,5 @@ const loginService = async (email, password) => {
 module.exports = {
   createUserService,
   loginService,
+  getUserService,
 };
