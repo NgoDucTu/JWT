@@ -1,7 +1,8 @@
-import axios from "axios";
+// import axios from "axios";
+import axios from "./axios.custiomize";
 
 const createUserApi = async (name, password, email) => {
-  const URL = "http://localhost:8080/v1/api/register";
+  const URL = "/v1/api/register";
   const data = {
     name,
     password,
@@ -13,7 +14,7 @@ const createUserApi = async (name, password, email) => {
 };
 
 const loginApi = async (email, password) => {
-  const URL = "http://localhost:8080/v1/api/login";
+  const URL = "/v1/api/login";
   const data = {
     email,
     password,
@@ -23,8 +24,8 @@ const loginApi = async (email, password) => {
   return res.data;
 };
 
-const getUserApi = async () => {
-  const URL = "http://localhost:8080/v1/api/user";
+const getUserApi = () => {
+  const URL = "/v1/api/user";
 
   return axios.get(URL);
 };
