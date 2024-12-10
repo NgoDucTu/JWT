@@ -31,6 +31,7 @@ const loginService = async (email, password) => {
       return {
         EC: 1,
         EM: "Email / Password wrong",
+        EC: test,
       };
     } else {
       const isMatchPassword = await bcrypt.compare(password, user.password);
