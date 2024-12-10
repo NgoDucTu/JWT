@@ -3,7 +3,6 @@ import { Button, Checkbox, Form, Input, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { createUserApi } from "../util/api";
 
-const testgit = () => {};
 const RegisterPage = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
