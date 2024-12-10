@@ -49,12 +49,12 @@ const RegisterPage = () => {
         layout="vertical"
       >
         <Form.Item
-          label="Name"
-          name="name"
+          label="Email"
+          name="email"
           rules={[
             {
               required: true,
-              message: "Please input your name!",
+              message: "Please input your email!",
             },
           ]}
         >
@@ -75,12 +75,12 @@ const RegisterPage = () => {
         </Form.Item>
 
         <Form.Item
-          label="Email"
-          name="email"
+          label="Name"
+          name="name"
           rules={[
             {
               required: true,
-              message: "Please input your email!",
+              message: "Please input your name!",
             },
           ]}
         >
