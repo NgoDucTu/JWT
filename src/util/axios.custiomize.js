@@ -16,7 +16,6 @@ instance.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
-    if (error?.response?.data) return error?.response?.data;
     return Promise.reject(error);
   }
 );
