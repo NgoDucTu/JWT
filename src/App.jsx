@@ -1,26 +1,55 @@
+import axios from "./util/axios.custiomize";
 
-import axios from './util/axios.custiomize'
-import { useEffect } from 'react'
-import Header from './components/layout/header.jsx';
-import { Outlet } from 'react-router-dom';
-
+import { useContext, useEffect } from "react";
+import Header from "./components/layout/header.jsx";
+import { Outlet } from "react-router-dom";
+import { AuthContext } from "./components/context/auth.context.jsx";
+import { Spin } from "antd";
 
 function App() {
+  const { setAuth, appLoading, setAppLoaing } = useContext(AuthContext);
+
   useEffect(() => {
-    
-    const fetchHello = async() => {
-      const res = await axios.get(`/v1/api/`);
-      console.log("check res: ", res)
-    }
-    fetchHello()
-  }, [])  // [] -> chay 1 lan
+    const fetchAccount = async () => {
+      setAppLoaing(true);
+      const res = await axios.get(`/v1/api/account`);
+      if (res) {
+        setAuth({
+          isAuthenticated: true,
+          user: {
+            email: res.email,
+            name: res.name,
+          },
+        });
+      }
+      setAppLoaing(false);
+    };
+    fetchAccount();
+  }, []); // [] -> chay 1 lan
 
   return (
     <div>
-      <Header />
-      <Outlet />
+      {appLoading === true ? (
+        <>
+          <div
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Spin></Spin>
+          </div>
+        </>
+      ) : (
+        <>
+          <Header />
+          <Outlet />
+        </>
+      )}
     </div>
-  )
-} 
+  );
+}
 
-export default App
+export default App;
